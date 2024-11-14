@@ -9,8 +9,19 @@ import (
 	"syscall"
 	"time"
 
+	"core/internal/database"
 	"core/internal/server"
 )
+
+func init() {
+	db := database.New()
+	defer db.Close()
+
+	err := db.CreateTables(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
 func main() {
 	server := server.NewServer()

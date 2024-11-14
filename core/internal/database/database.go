@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"database/sql"
 	"log"
 	"os"
@@ -11,6 +12,7 @@ import (
 
 type Service interface {
 	Close() error
+	CreateTables(ctx context.Context) error
 }
 
 type service struct {
