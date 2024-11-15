@@ -2,10 +2,12 @@ package database
 
 import (
 	"context"
+	"core/internal/models"
 	"database/sql"
 	"log"
 	"os"
 
+	"github.com/go-webauthn/webauthn/webauthn"
 	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -13,6 +15,16 @@ import (
 type Service interface {
 	Close() error
 	CreateTables(ctx context.Context) error
+
+	// User-related methods
+	GetUserByID(ctx context.Context, id string) (*models.User, error)
+	GetUserByName(ctx context.Context, name string) (*models.User, error)
+	SaveUser(ctx context.Context, user *models.User) error
+
+	// Credential-related methods
+	SaveCredential(ctx context.Context, credential *models.Credential) error
+	GetCredentialsForUser(ctx context.Context, userID string) ([]webauthn.Credential, error)
+	UpdateCredentialSignCount(ctx context.Context, credentialID []byte, signCount uint32) error
 }
 
 type service struct {

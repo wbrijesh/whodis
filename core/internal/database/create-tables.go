@@ -25,6 +25,11 @@ func (s *service) CreateTables(ctx context.Context) error {
 			public_key BLOB NOT NULL,
 			credential_id BLOB NOT NULL,
 			sign_count INTEGER NOT NULL,
+			aaguid BLOB,
+			clone_warning BOOLEAN NOT NULL DEFAULT false,
+			attachment TEXT,
+			backup_eligible BOOLEAN NOT NULL DEFAULT false,
+			backup_state BOOLEAN NOT NULL DEFAULT false,
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			FOREIGN KEY (user_id) REFERENCES users(id)
 		);`)

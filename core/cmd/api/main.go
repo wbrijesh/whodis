@@ -15,7 +15,7 @@ import (
 
 func init() {
 	db := database.New()
-	defer db.Close()
+	// defer db.Close()
 
 	err := db.CreateTables(context.Background())
 	if err != nil {
